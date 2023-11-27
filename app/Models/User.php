@@ -3,10 +3,13 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Admin;
+use App\Models\Staff;
+use Illuminate\Support\Manager;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -42,4 +45,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function profile()
+    {
+        if ($this->is_admin) {
+            return $this->belongsTo(Admin::class, 'user_id', 'id');
+        } elseif ($this->is_manager) {
+            return $this->belongsTo(Manager::class, 'user_id', 'id');
+        } elseif ($this->is_staff) {
+            return $this->belongsTo(Staff::class, 'user_id', 'id');
+        }
+    }
 }

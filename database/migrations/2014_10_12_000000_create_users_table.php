@@ -1,5 +1,6 @@
 <?php
 
+use Brick\Math\BigInteger;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,16 +14,36 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('employee_nik');
-            $table->foreign('employee_nik')->references('nik')->on('employees');
+            $table->string('name'); 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('isAdmin');
-            $table->boolean('isSupervisor');
-            $table->boolean('isEmploye');
+            $table->boolean('is_admin')->nullable();
+            $table->boolean('is_manager')->nullable();
+            $table->boolean('is_staff')->nullable();
             $table->rememberToken();
+            $table->timestamps();
+        });
+    
+        Schema::create('admins', function (Blueprint $table) {
+            $table->string('admin_id')->primary();
+            $table->string('user_id');
+            $table->string('arsip');
+            $table->timestamps();
+        });
+        
+        Schema::create('managers', function (Blueprint $table) {
+            $table->string('manager_id')->primary();
+            $table->string('user_id');
+            $table->timestamps();
+        });
+        
+        Schema::create('staff', function (Blueprint $table) {
+            $table->string('staff_id')->primary();
+            $table->string('user_id');
+            $table->boolean('alfa');  
+            $table->boolean('izin');  
+            $table->boolean('sakit');  
             $table->timestamps();
         });
     }
