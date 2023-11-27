@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->string('nik')->primary();
             $table->string('name'); 
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -27,20 +27,23 @@ return new class extends Migration
     
         Schema::create('admins', function (Blueprint $table) {
             $table->string('admin_id')->primary();
-            $table->string('user_id');
+            $table->string('user_nik');
+            $table->foreign('user_nik')->references('nik')->on('users');
             $table->string('arsip');
             $table->timestamps();
         });
         
         Schema::create('managers', function (Blueprint $table) {
             $table->string('manager_id')->primary();
-            $table->string('user_id');
+            $table->string('user_nik');
+            $table->foreign('user_nik')->references('nik')->on('users');
             $table->timestamps();
         });
         
         Schema::create('staff', function (Blueprint $table) {
             $table->string('staff_id')->primary();
-            $table->string('user_id');
+            $table->string('user_nik');
+            $table->foreign('user_nik')->references('nik')->on('users');
             $table->boolean('alfa');  
             $table->boolean('izin');  
             $table->boolean('sakit');  

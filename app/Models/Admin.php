@@ -11,6 +11,6 @@ class Admin extends Model
 
     protected $primaryKey = 'admin_id';
     public function user() {
-        return $this->hasMany(User::class, 'user_id', 'id');
+        return $this->hasMany(User::class, 'user_nik', 'nik');
     }
 }

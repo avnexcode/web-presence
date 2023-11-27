@@ -18,18 +18,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::create([
+            'nik' => '22104410046',
             'name' => 'Muhammad Fauzi Nur Aziz',
             'email' => 'axnvee18@gmail.com',
             'password' => bcrypt('password'),
             'is_admin' => true,
         ]);
         \App\Models\User::create([
+            'nik' => '22104410014',
             'name' => 'Rafi Andrea Lesmana',
             'email' => 'andrea@gmail.com',
             'password' => bcrypt('password'),
             'is_manager' => true,
         ]);
         \App\Models\User::create([
+            'nik' => '22104410048',
             'name' => 'Rafi Ari Fiandi',
             'email' => 'fiandi@gmail.com',
             'password' => bcrypt('password'),
@@ -38,19 +41,19 @@ class DatabaseSeeder extends Seeder
 
         Admin::create([
             'admin_id' => 'adm001',
-            'user_id' => '1',
+            'user_nik' => '22104410046',
             'arsip' => 'arsip_presence_staff', 
         ]);
         
         // Managers 
         Manager::create([
-            'user_id' => '2',
+            'user_nik' => '22104410014',
             'manager_id' => 'm001',
         ]);
         
         // Staff
         Staff::create([
-            'user_id' => '3',
+            'user_nik' => '22104410046',
             'staff_id' => 'stf001', 
             'alfa' => false,
             'izin' => false,
