@@ -16,7 +16,7 @@ class AdminSeeder extends Seeder
         Admin::create([
             'admin_id' => 'adm001',
             'position_id' => 1,
-            'arsip' => 'arsip_presence_staff', 
+            'arsip' => 'arsip_presence', 
         ]);
     }
 }

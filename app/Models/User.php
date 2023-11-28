@@ -51,25 +51,14 @@ class User extends Authenticatable
     protected $guarded = ['nik'];
     // protected $with = ['manager', 'admin', 'staff'];
     public function position() {
-        return $this->belongsTo(Position::class);
+        return $this->belongsTo(Position::class, 'position_id', 'id');
     }
+
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? false, fn ($query, $search) =>
         $query->where('nik', 'like', "%$search%")
             ->orWhere('email', 'like', "%$search%")
             ->orWhere('name', 'like', "%$search%"));
-
-        // $query->when($filters['category'] ?? false, function ($query, $category) {
-        //     return $query->whereHas('category', function ($query) use ($category) {
-        //         $query->where('slug', $category);
-        //     });
-        // });
-
-        // $query->when($filters['user'] ?? false, function ($query, $user) {
-        //     return $query->whereHas('user', function ($query) use ($user) {
-        //         $query->where('username', $user);
-        //     });
-        // });
     }
 }

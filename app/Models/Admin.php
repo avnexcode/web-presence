@@ -11,7 +11,8 @@ class Admin extends Model
 
     protected $table = 'admins';
     protected $primaryKey = 'admin_id';
-    public function position() {
-        return $this->belongsTo(Position::class);
+    public function position()
+    {
+        return $this->belongsTo(Position::class, 'position_id', 'id');
     }
 }

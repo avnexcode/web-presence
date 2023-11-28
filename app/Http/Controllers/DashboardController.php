@@ -10,13 +10,15 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function dashboard() {
+    public function dashboard(User $user) {
+        $users = $user->with('position')
+        ->filter(request(['search']))
+        ->paginate(6)
+        ->withQueryString();
+        
         return Inertia::render('Dashboard', [
             'title' => 'Dashboard',
-            'users' => new UserResource(User::latest()
-            ->filter(request(['search']))
-            ->paginate(6)
-            ->withQueryString())
+            'users' => UserResource::collection($users),
         ]);
     }
 }

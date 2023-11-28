@@ -12,10 +12,8 @@ class PresenceController extends Controller
 {
     public function index() {
         
-        $job = User::with('position')->get();
         return Inertia::render('Presence/Presence', [
             'title' => 'Presence',
-            'job' => $job
         ]);
     }
 }

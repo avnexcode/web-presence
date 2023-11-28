@@ -11,13 +11,18 @@ class Position extends Model
     protected $table = 'positions';
     protected $primaryKey = 'id';
 
-    public function admin() {
-        return $this->hasMany(Admin::class);
+    public function users()
+    {
+        return $this->hasMany(User::class, 'position_id', 'id');
     }
-    public function manager() {
-        return $this->hasMany(Manager::class);
+
+    public function admins()
+    {
+        return $this->hasMany(Admin::class, 'position_id', 'id');
     }
-    public function staff() {
-        return $this->hasMany(Staff::class);
+
+    public function staff()
+    {
+        return $this->hasMany(Staff::class, 'position_id', 'id');
     }
 }

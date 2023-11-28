@@ -1,11 +1,14 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PresenceController;
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\EditController;
+use App\Http\Controllers\CreateController;
+use App\Http\Controllers\DetailController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PresenceController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,14 +31,17 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-// Route::get('/dashborad/{users:name}', [DashboardController::class, 'dashboard']);
 
-Route::get('/presence', [PresenceController::class, 'index'])->name('presence');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/presence', [PresenceController::class, 'index'])->name('presence');
+    Route::get('/dashboard/create', [CreateController::class, 'index']);
+    Route::get('/dashboard/detail', [DetailController::class, 'index']);
+    Route::get('/dashboard/edit', [EditController::class, 'index']);
 });
 
 require __DIR__.'/auth.php';

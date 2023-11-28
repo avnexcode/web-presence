@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
+use App\Http\Resources\PositionResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -14,6 +15,13 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'nik' => $this->nik,
+            'name' => $this->name,
+            'email' => $this->email,
+            'position' => $this->whenLoaded('position', function () {
+                return new PositionResource($this->position);
+            }),
+        ];
     }
 }

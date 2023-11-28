@@ -17,9 +17,6 @@ class PositionSeeder extends Seeder
             'position' => 'admin',
         ]);
         Position::create([
-            'position' => 'manager',
-        ]);
-        Position::create([
             'position' => 'staff',
         ]);
     }
