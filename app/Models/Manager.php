@@ -9,8 +9,9 @@ class Manager extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'admin_id';
-    public function user() {
-        return $this->belongsTo(User::class, 'user_nik', 'nik');
+    protected $table = 'managers';
+    protected $primaryKey = 'manager_id';
+    public function position() {
+        return $this->belongsTo(Position::class);
     }
 }

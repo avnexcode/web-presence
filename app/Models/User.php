@@ -15,6 +15,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    protected $table = 'users';
     protected $primaryKey = 'nik';
     /**
      * The attributes that are mass assignable.
@@ -47,14 +48,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function profile()
-    {
-        if ($this->is_admin) {
-            return $this->belongsTo(Admin::class, 'user_id', 'id');
-        } elseif ($this->is_manager) {
-            return $this->belongsTo(Manager::class, 'user_id', 'id');
-        } elseif ($this->is_staff) {
-            return $this->belongsTo(Staff::class, 'user_id', 'id');
-        }
+    protected $guarded = ['nik'];
+    // protected $with = ['manager', 'admin', 'staff'];
+    public function position() {
+        return $this->belongsTo(Position::class);
     }
 }

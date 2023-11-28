@@ -10,9 +10,9 @@ class Staff extends Model
 {
     use HasFactory;
 
+    protected $table = 'staff';
     protected $primaryKey = 'staff_id';
-    public function user() {
-        return $this->belongsTo(User::class, 'user_nik', 'nik');
+    public function position() {
+        return $this->belongsTo(Position::class);
     }
-
 }

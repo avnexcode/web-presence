@@ -8,6 +8,7 @@ import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import heroImage from "@/assets/image/hero.png"
 
+
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
@@ -25,6 +26,8 @@ export default function Login({ status, canResetPassword }) {
 
         post(route('login'));
     };
+
+    
 
     return (
         <div className='flex justify-center min-h-[100vh] max-h-[100vh] overflow-hidden'>

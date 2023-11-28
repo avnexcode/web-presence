@@ -9,8 +9,9 @@ class Admin extends Model
 {
     use HasFactory;
 
+    protected $table = 'admins';
     protected $primaryKey = 'admin_id';
-    public function user() {
-        return $this->hasMany(User::class, 'user_nik', 'nik');
+    public function position() {
+        return $this->belongsTo(Position::class);
     }
 }
