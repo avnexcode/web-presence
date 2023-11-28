@@ -18,7 +18,6 @@ export default function Presence({ auth, job }) {
         };
     }, []);
 
-    console.log()
     const submit = () => {
         console.log(data)
     }

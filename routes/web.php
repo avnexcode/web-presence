@@ -28,6 +28,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashborad/{users:name}', [DashboardController::class, 'dashboard']);
 
 Route::get('/presence', [PresenceController::class, 'index'])->name('presence');
 
