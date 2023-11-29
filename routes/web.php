@@ -39,9 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/presence', [PresenceController::class, 'index'])->name('presence');
-    Route::get('/dashboard/create', [CreateController::class, 'index']);
-    Route::get('/dashboard/detail', [DetailController::class, 'index']);
-    Route::get('/dashboard/edit', [EditController::class, 'index']);
+    Route::get('/dashboard/create', [CreateController::class, 'index'])->name('create');
+    Route::post('/dashboard/create', [CreateController::class, 'store']);
+    Route::get('/dashboard/detail', [DetailController::class, 'index'])->name('');
+    Route::get('/dashboard/edit', [EditController::class, 'index'])->name('');
+    Route::delete('/dashboard', [DashboardController::class, 'destroy'])->name('');
 });
 
 require __DIR__.'/auth.php';

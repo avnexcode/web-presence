@@ -39,7 +39,6 @@ export default function DeleteUserForm({ className = '' }) {
 
     const closeModal = () => {
         setConfirmingUserDeletion(false);
-
         reset();
     };
 
@@ -49,8 +48,7 @@ export default function DeleteUserForm({ className = '' }) {
                 <h2 className="text-lg font-medium text-gray-900">Delete Account</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
-                    Once your account is deleted, all of its resources and data will be permanently deleted. Before
-                    deleting your account, please download any data or information that you wish to retain.
+                    Setelah akun Anda dihapus, semua sumber daya dan data yang terkait akan dihapus secara permanen. Sebelum menghapus akun Anda, harap unduh semua data atau informasi yang ingin Anda simpan.
                 </p>
             </header>
 
@@ -59,12 +57,11 @@ export default function DeleteUserForm({ className = '' }) {
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
                     <h2 className="text-lg font-medium text-gray-900">
-                        Are you sure you want to delete your account?
+                        Apakah Anda yakin ingin menghapus akun Anda?
                     </h2>
 
                     <p className="mt-1 text-sm text-gray-600">
-                        Once your account is deleted, all of its resources and data will be permanently deleted. Please
-                        enter your password to confirm you would like to permanently delete your account.
+                        Setelah akun Anda dihapus, semua sumber daya dan data yang terkait akan dihapus secara permanen. Silakan masukkan kata sandi Anda untuk mengkonfirmasi bahwa Anda ingin menghapus akun Anda secara permanen.
                     </p>
 
                     <div className="mt-6">

@@ -1,10 +1,47 @@
 import Paginator from "./Paginator";
 import Sorting from '@/Components/Sorting';
 import { TbReload } from "react-icons/tb";
-import { Link } from "@inertiajs/react"
+import { Link, useForm } from "@inertiajs/react"
 import PrimaryButton from "./PrimaryButton";
+import Modal from "./Modal";
+import { useState, useRef } from "react";
+import SecondaryButton from "./SecondaryButton";
+import DangerButton from "./DangerButton";
 export default function TablePresence({ users }) {
     console.log(users.data[0])
+    const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
+    const passwordInput = useRef();
+
+    const {
+        data,
+        setData,
+        delete: destroy,
+        processing,
+        reset,
+        errors,
+    } = useForm({
+        password: '',
+    });
+
+    const confirmUserDeletion = () => {
+        setConfirmingUserDeletion(true);
+    };
+
+    const deleteUser = (e) => {
+        e.preventDefault();
+
+        destroy(route('profile.destroy'), {
+            preserveScroll: true,
+            onSuccess: () => closeModal(),
+            // onError: () => passwordInput.current.focus(),
+            onFinish: () => reset(),
+        });
+    };
+
+    const closeModal = () => {
+        setConfirmingUserDeletion(false);
+        reset();
+    };
     return (
         <>
             <div className="flex flex-col">
@@ -14,7 +51,7 @@ export default function TablePresence({ users }) {
                             <div className="py-3 px-4 flex justify-between items-center gap-2">
                                 <Link href="/dashboard">
                                     <PrimaryButton className="text-xl">
-                                        <TbReload/>
+                                        <TbReload />
                                     </PrimaryButton>
                                 </Link>
                                 <form action="/dashboard" className="relative w-full" method="get">
@@ -34,6 +71,7 @@ export default function TablePresence({ users }) {
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NIK</th>
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NAME</th>
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">PRESENSI</th>
+                                            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal</th>
                                             <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Action</th>
                                             <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Action</th>
                                         </tr>
@@ -46,11 +84,30 @@ export default function TablePresence({ users }) {
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{item.nik}</td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm text-gray-800">{item.name.toUpperCase()}</td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500">Tidak Hadir</td>
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500">29 November 2023</td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                         <Link href={'dashboard/detail'} type="button" className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Detail</Link>
                                                     </td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                        <button type="button" className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                                                        <button onClick={confirmUserDeletion} className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Delete</button>
+                                                        <Modal show={confirmingUserDeletion} onClose={closeModal}>
+                                                            <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                                                                <div onClose={closeModal}>
+                                                                    <h2 className="text-lg font-medium text-gray-900">
+                                                                        Apakah Anda yakin ingin menghapus data staff?
+                                                                    </h2>
+                                                                    <p className="mt-1 text-sm text-gray-600">
+                                                                        Setelah akun Anda dihapus, semua sumber daya dan data yang terkait akan dihapus secara permanen.
+                                                                    </p>
+                                                                    <div className="mt-6 flex justify-end">
+                                                                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+                                                                        <DangerButton className="ms-3" disabled={processing}>
+                                                                            Delete Data Staff
+                                                                        </DangerButton>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </Modal>
                                                     </td>
                                                 </tr>
                                             )

@@ -12,6 +12,22 @@ export default {
 
     theme: {
         extend: {
+            keyframes: {
+                'super-bounce': {
+                    '0%, 100%': {
+                      transform: 'translateY(-350%)',
+                      animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)'  
+                    },
+                    '50%': {
+                      transform: 'translateY(0)',
+                      animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)'
+                    }
+                  }
+            },
+            animation: {
+                "super-spin": 'spin 500ms linear infinite',
+                "super-bounce": 'super-bounce 500ms linear infinite'
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
