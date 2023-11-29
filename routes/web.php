@@ -30,20 +30,30 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
-
 
 
 Route::middleware('auth')->group(function () {
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    
     Route::get('/presence', [PresenceController::class, 'index'])->name('presence');
+
+    Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+
     Route::get('/dashboard/create', [CreateController::class, 'index'])->name('create');
+
     Route::post('/dashboard/create', [CreateController::class, 'store']);
-    Route::get('/dashboard/detail', [DetailController::class, 'index'])->name('');
-    Route::get('/dashboard/edit', [EditController::class, 'index'])->name('');
-    Route::delete('/dashboard', [DashboardController::class, 'destroy'])->name('');
+
+    Route::get('/dashboard/detail/{user:nik}', [DashboardController::class, 'show'])->name('dashboard.detail');
+
+    Route::get('/dashboard/edit', [EditController::class, 'index'])->name('dashboard.edit');
+
+    Route::delete('/dashboard/delete/{user:nik}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
+
 });
 
 require __DIR__.'/auth.php';

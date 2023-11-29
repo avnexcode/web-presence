@@ -25,22 +25,17 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function destroy(Request $request): RedirectResponse
-    {
-        // $request->validate([
-        //     'password' => ['required', 'current_password'],
-        // ]);
+    public function show(User $user) {
+        return Inertia::render('Dashboard/Detail', [
+            'title' => 'Detail',
+            'user' => $user
+        ]);
+    }
 
-        $user = $request->user();
-
-        dd($user);
-        Auth::logout();
-
+    public function destroy(User $user)  
+    {   dd($user);
         $user->delete();
-
-        // $request->session()->invalidate();
-        // $request->session()->regenerateToken();
-
-        return Redirect::to('/dashboard');
+        
+        return Redirect::route('dashboard'); 
     }
 }

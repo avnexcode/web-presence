@@ -1,12 +1,13 @@
 import Paginator from "./Paginator";
 import Sorting from '@/Components/Sorting';
 import { TbReload } from "react-icons/tb";
-import { Link, useForm } from "@inertiajs/react"
+import { Link, useForm, usePage } from "@inertiajs/react"
 import PrimaryButton from "./PrimaryButton";
 import Modal from "./Modal";
 import { useState, useRef } from "react";
 import SecondaryButton from "./SecondaryButton";
 import DangerButton from "./DangerButton";
+import ConfirmUserDeletion from "@/Pages/Dashboard/components/ConfirmUserDeletion";
 export default function TablePresence({ users }) {
     console.log(users.data[0])
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
@@ -86,27 +87,16 @@ export default function TablePresence({ users }) {
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500">Tidak Hadir</td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500">29 November 2023</td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                        <Link href={'dashboard/detail'} type="button" className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Detail</Link>
+                                                        <Link href={`dashboard/detail/${item.nik}`} type="button" className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Detail</Link>
                                                     </td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                         <button onClick={confirmUserDeletion} className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Delete</button>
                                                         <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                                                            <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                                                                <div onClose={closeModal}>
-                                                                    <h2 className="text-lg font-medium text-gray-900">
-                                                                        Apakah Anda yakin ingin menghapus data staff?
-                                                                    </h2>
-                                                                    <p className="mt-1 text-sm text-gray-600">
-                                                                        Setelah akun Anda dihapus, semua sumber daya dan data yang terkait akan dihapus secara permanen.
-                                                                    </p>
-                                                                    <div className="mt-6 flex justify-end">
-                                                                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
-                                                                        <DangerButton className="ms-3" disabled={processing}>
-                                                                            Delete Data Staff
-                                                                        </DangerButton>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                                            <ConfirmUserDeletion 
+                                                                user={item}
+                                                                onDelete={deleteUser}
+                                                                onCancel={closeModal}
+                                                                />
                                                         </Modal>
                                                     </td>
                                                 </tr>

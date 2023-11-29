@@ -13,13 +13,19 @@ export default function Create({ auth, title, users }) {
     //     window.location.href = "http://127.0.0.1:8000/presence";
     // }
     const { data, setData, post, processing, errors, reset } = useForm({
-        nik: '22104411100',
-        name: 'RONALDO WATU',
-        email: 'wati@gmail.com',
-        password: 'password',
-        password_confirmation: 'password',
+        nik: '',
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
     });
-    console.log({ data, post, processing, errors })
+    // const { data, setData, post, processing, errors, reset } = useForm({
+    //     nik: '22104411100',
+    //     name: 'RONALDO WATU',
+    //     email: 'wati@gmail.com',
+    //     password: 'password',
+    //     password_confirmation: 'password',
+    // });
 
     useEffect(() => {
         return () => {
