@@ -1,9 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
-import TablePresence from '@/Components/TablePresence';
-import PrimaryButton from '@/Components/PrimaryButton';
+import TableHistory from '@/Components/TableHistory';
 
-export default function Dashboard({ auth, title, users }) {
+export default function History({ auth, title, users }) {
     // if (auth.user.position_id !== 1) {
     //     window.location.href = "http://127.0.0.1:8000/presence";
     // }
@@ -12,11 +11,8 @@ export default function Dashboard({ auth, title, users }) {
             user={auth.user}
             header={
                 <>
-                    <div className='flex justify-between px-10'>
-                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-                        <PrimaryButton>
-                            <Link href='/dashboard/create'>Tambah Data Staff</Link>
-                        </PrimaryButton>
+                    <div>
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">Histori Presensi</h2>
                     </div>
                 </>
             }
@@ -26,7 +22,7 @@ export default function Dashboard({ auth, title, users }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <TablePresence users={users} />
+                            <TableHistory users={users}/>
                         </div>
                     </div>
                 </div>

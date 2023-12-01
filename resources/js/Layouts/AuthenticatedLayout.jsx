@@ -24,7 +24,10 @@ export default function Authenticated({ user, header, children }) {
                                     Dashboard
                                 </NavLink>
                                 <NavLink href={route('presence')} active={route().current('presence')}>
-                                    Presence
+                                    Presensi
+                                </NavLink>
+                                <NavLink href={route('history')} active={route().current('history')}>
+                                    Histori Presensi
                                 </NavLink>
                             </div>
                         </div>

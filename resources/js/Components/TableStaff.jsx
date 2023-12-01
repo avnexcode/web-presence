@@ -9,40 +9,7 @@ import SecondaryButton from "./SecondaryButton";
 import DangerButton from "./DangerButton";
 import ConfirmUserDeletion from "@/Pages/Dashboard/components/ConfirmUserDeletion";
 export default function TablePresence({ users }) {
-    console.log(users.data[0])
-    const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
-    const passwordInput = useRef();
 
-    const {
-        data,
-        setData,
-        delete: destroy,
-        processing,
-        reset,
-        errors,
-    } = useForm({
-        password: '',
-    });
-
-    const confirmUserDeletion = () => {
-        setConfirmingUserDeletion(true);
-    };
-
-    const deleteUser = (e) => {
-        e.preventDefault();
-
-        destroy(route('profile.destroy'), {
-            preserveScroll: true,
-            onSuccess: () => closeModal(),
-            // onError: () => passwordInput.current.focus(),
-            onFinish: () => reset(),
-        });
-    };
-
-    const closeModal = () => {
-        setConfirmingUserDeletion(false);
-        reset();
-    };
     return (
         <>
             <div className="flex flex-col">
@@ -71,33 +38,18 @@ export default function TablePresence({ users }) {
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NO</th>
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NIK</th>
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NAME</th>
-                                            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">PRESENSI</th>
-                                            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">Tanggal</th>
-                                            <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Action</th>
                                             <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 ">
-                                        {users.data.map((item, index) => {
+                                        {users.data.map((user, index) => {
                                             return (
                                                 <tr key={index} className="[&>*]:text-left">
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{index + 1}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{item.nik}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-gray-800">{item.name.toUpperCase()}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500">Tidak Hadir</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500">29 November 2023</td>
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{user.nik}</td>
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-gray-800">{user.name.toUpperCase()}</td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                        <Link href={`dashboard/detail/${item.nik}`} type="button" className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Detail</Link>
-                                                    </td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                        <button onClick={confirmUserDeletion} className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Delete</button>
-                                                        <Modal show={confirmingUserDeletion} onClose={closeModal}>
-                                                            <ConfirmUserDeletion 
-                                                                user={item}
-                                                                onDelete={deleteUser}
-                                                                onCancel={closeModal}
-                                                                />
-                                                        </Modal>
+                                                        <Link href={`dashboard/detail/${user.nik}`} type="button" className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Detail</Link>
                                                     </td>
                                                 </tr>
                                             )

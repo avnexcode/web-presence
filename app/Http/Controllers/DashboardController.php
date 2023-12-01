@@ -19,7 +19,7 @@ class DashboardController extends Controller
         ->paginate(6)
         ->withQueryString();
         
-        return Inertia::render('Dashboard', [
+        return Inertia::render('Dashboard/Dashboard', [
             'title' => 'Dashboard',
             'users' => UserResource::collection($users),
         ]);
@@ -32,10 +32,20 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function history(User $user) {
+        $users = $user->with('position')
+        ->filter(request(['search']))
+        ->paginate(6)
+        ->withQueryString();
+        return Inertia::render('Dashboard/History', [
+            'title' => 'Riwayat Presensi',
+            'users' => UserResource::collection($users)
+        ]);
+    }
+
     public function destroy(User $user)  
-    {   dd($user);
+    {   
         $user->delete();
-        
         return Redirect::route('dashboard'); 
     }
 }

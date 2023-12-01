@@ -11,7 +11,9 @@ import { useForm, Link } from '@inertiajs/react';
 export default function ConfirmUserDeletion({ user, onDelete, onCancel }) {
     console.log(user)
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
-    const {processing} = useForm()
+    const {processing, reset, data} = useForm()
+    console.log(data)
+
     const deleteUser = async (user) => {
         await axios.delete(route('dashboard.destroy', user))
         closeModal()
@@ -32,7 +34,7 @@ export default function ConfirmUserDeletion({ user, onDelete, onCancel }) {
                 </p>
                 <div className="mt-6 flex justify-end">
                     <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
-                    <Link href={`dashboard/delete`}>
+                    <Link>
                         <DangerButton className="ms-3" disabled={processing}>
                             Delete Data Staff
                         </DangerButton>

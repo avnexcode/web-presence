@@ -52,7 +52,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard/edit', [EditController::class, 'index'])->name('dashboard.edit');
 
-    Route::delete('/dashboard/delete/{user:nik}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
+    Route::get('/dashboard/delete/{user:nik}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
+
+    Route::get('/dashboard/riwayat', [DashboardController::class, 'history'])->name('history');
 
 });
 

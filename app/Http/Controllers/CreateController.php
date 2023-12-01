@@ -22,13 +22,16 @@ class CreateController extends Controller
         // dd($request->all());
         // echo $request->all();
         $rules = [
-            'nik' => ['required', 'min:10'],
+            'nik' => ['unique:users','required', 'min:10'],
             'name' => ['required', 'max:255'],
             'email' => ['required', 'email:dns', 'unique:users'],
             'password' => ['required', 'min:8']
         ];
 
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($rules,[
+            'nik.unique' => 'NIK yang anda masukkan sudah digunakan.',
+            'email.unique' => 'Email yang anda masukkan sudah digunakan.'
+        ]);
         $validatedData['password'] = Hash::make($request->password);
         User::create($validatedData);
         return redirect('/dashboard')->with('flashMessage', 'Tambah Data Berhasil!');

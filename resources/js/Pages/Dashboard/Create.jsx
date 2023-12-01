@@ -5,7 +5,6 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import TablePresence from '@/Components/TablePresence';
 import PrimaryButton from '@/Components/PrimaryButton';
 
 export default function Create({ auth, title, users }) {
@@ -13,12 +12,13 @@ export default function Create({ auth, title, users }) {
     //     window.location.href = "http://127.0.0.1:8000/presence";
     // }
     const { data, setData, post, processing, errors, reset } = useForm({
-        nik: '',
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
+        nik: '22104410046',
+        name: 'Muhammad Fauzi Nur Aziz',
+        email: 'axnvee18@gmail.com',
+        password: 'password',
+        password_confirmation: 'password',
     });
+    console.log(errors)
     // const { data, setData, post, processing, errors, reset } = useForm({
     //     nik: '22104411100',
     //     name: 'RONALDO WATU',
