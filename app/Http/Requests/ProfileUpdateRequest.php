@@ -13,11 +13,33 @@ class ProfileUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
+    // , Rule::unique(User::class)->ignore($this->user()->id)
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'name' => [
+                'required', 
+                'string', 
+                'max:255'],
+            'email' => [
+                'required', 
+                'string', 
+                'lowercase', 
+                'email', 
+                'max:255', 
+                Rule::unique(User::class)->ignore($this->user()->nik)],
+            // no hp
+            'phone' => [
+                'nullable',
+                'max:255', 
+                Rule::unique(User::class)->ignore($this->user()->nik)],
         ];
     }
+    public function messages(): array
+{
+    return [
+        'email.unique' => 'Alamat email sudah digunakan oleh staff lain.',
+        'phone.unique' => 'Nomor HP sudah digunakan oleh staff lain.',
+    ];
+}
 }

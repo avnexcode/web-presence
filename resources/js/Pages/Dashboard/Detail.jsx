@@ -76,7 +76,7 @@ export default function Detail({ auth, title, user }) {
                                 <TextInput
                                     id="address"
                                     name="address"
-                                    value={"Kocok Terus Bang"}
+                                    value={user.address || ""}
                                     type="text"
                                     className="mt-1 block w-full"
                                     autoComplete="current-password"

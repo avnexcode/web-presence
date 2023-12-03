@@ -12,8 +12,8 @@ export default function Create({ auth, title, users }) {
     //     window.location.href = "http://127.0.0.1:8000/presence";
     // }
     const { data, setData, post, processing, errors, reset } = useForm({
-        nik: '22104410046',
-        name: 'Muhammad Fauzi Nur Aziz',
+        nik: '2210441002',
+        name: 'Ronaldo Wati',
         email: 'axnvee18@gmail.com',
         password: 'password',
         password_confirmation: 'password',

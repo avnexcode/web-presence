@@ -29,11 +29,11 @@ class CreateController extends Controller
         ];
 
         $validatedData = $request->validate($rules,[
-            'nik.unique' => 'NIK yang anda masukkan sudah digunakan.',
-            'email.unique' => 'Email yang anda masukkan sudah digunakan.'
+            'nik.unique' => 'Nomor induk karyawan sudah digunakan oleh staff lain.',
+            'email.unique' => 'Alamat email sudah digunakan oleh staff lain.'
         ]);
         $validatedData['password'] = Hash::make($request->password);
         User::create($validatedData);
-        return redirect('/dashboard')->with('flashMessage', 'Tambah Data Berhasil!');
+        return redirect('/dashboard')->with('message', 'Data Karyawan Baru Berhasil Ditambahkan!');
     }
 }

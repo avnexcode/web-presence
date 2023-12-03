@@ -46,6 +46,6 @@ class DashboardController extends Controller
     public function destroy(User $user)  
     {   
         $user->delete();
-        return Redirect::route('dashboard'); 
+        return Redirect::route('dashboard')->with('message', 'Data Karyawan Berhasil di Hapus');
     }
 }

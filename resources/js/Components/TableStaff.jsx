@@ -1,15 +1,11 @@
 import Paginator from "./Paginator";
 import Sorting from '@/Components/Sorting';
 import { TbReload } from "react-icons/tb";
-import { Link, useForm, usePage } from "@inertiajs/react"
+import { Link } from "@inertiajs/react"
 import PrimaryButton from "./PrimaryButton";
-import Modal from "./Modal";
-import { useState, useRef } from "react";
-import SecondaryButton from "./SecondaryButton";
-import DangerButton from "./DangerButton";
-import ConfirmUserDeletion from "@/Pages/Dashboard/components/ConfirmUserDeletion";
 export default function TablePresence({ users }) {
 
+console.log(users)
     return (
         <>
             <div className="flex flex-col">

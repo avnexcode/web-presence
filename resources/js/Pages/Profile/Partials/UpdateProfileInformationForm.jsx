@@ -8,11 +8,15 @@ import { Transition } from '@headlessui/react';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
-
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,
+        address: user.address,
+        phone: user.phone,
+        gender: user.gender,
+        old: user.old
     });
+    console.log(data)
 
     const submit = (e) => {
         e.preventDefault();
@@ -30,7 +34,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
+            <form onSubmit={submit} className="mt-6 space-y-6" encType="multipart/form-data">
                 <div>
                     <ProfilePicture />
                 </div>
@@ -39,14 +43,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
                     <TextInput
                         id="name"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full min-h-[40px]"
                         value={data.name}
                         onChange={(e) => setData('name', e.target.value)}
                         required
                         isFocused
                         autoComplete="name"
                     />
-
                     <InputError className="mt-2" message={errors.name} />
                 </div>
 
@@ -56,16 +59,67 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <TextInput
                         id="email"
                         type="email"
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full min-h-[40px]"
                         value={data.email}
                         onChange={(e) => setData('email', e.target.value)}
                         required
                         autoComplete="username"
                     />
-
                     <InputError className="mt-2" message={errors.email} />
                 </div>
 
+                <div>
+                    <InputLabel htmlFor="address" value="Alamat" />
+
+                    <TextInput
+                        id="address"
+                        type="text"
+                        className="mt-1 block w-full min-h-[40px]"
+                        value={data.address || ""}
+                        onChange={(e) => setData('address', e.target.value)}
+                        autoComplete="address"
+                    />
+                    <InputError className="mt-2" message={errors.address} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="phone" value="No HP" />
+
+                    <TextInput
+                        id="phone"
+                        type="text"
+                        className="mt-1 block w-full min-h-[40px]"
+                        value={data.phone || ""}
+                        onChange={(e) => setData('phone', e.target.value)}
+                        autoComplete="phone"
+                    />
+                    <InputError className="mt-2" message={errors.phone} />
+                </div>
+
+                <div>
+                    {/* <InputLabel htmlFor="gender" value="Jenis Kelamin" /> */}
+
+                    <select name="gender" id="gender" defaultValue={data.gender || ""} onChange={e => {setData('gender', e.target.value)}}  className='mt-1 block w-full min-h-[40px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                        <option value="">Jenis Kelamin</option>
+                        <option value="Laki - Laki">Laki - Laki</option>
+                        <option value="Prempuan">Perempuan</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                    <InputError className="mt-2" message={errors.gender} />
+                </div>
+
+                <div>
+                    <InputLabel htmlFor="old" value="Usia" />
+
+                    <TextInput
+                        id="old"
+                        type="text"
+                        className="mt-1 block w-full min-h-[40px]"
+                        value={data.old || ""}
+                        onChange={(e) => setData('old', e.target.value)}
+                    />
+                    <InputError className="mt-2" message={errors.old} />
+                </div>
                 {mustVerifyEmail && user.email_verified_at === null && (
                     <div>
                         <p className="text-sm mt-2 text-gray-800">

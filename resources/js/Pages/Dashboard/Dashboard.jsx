@@ -1,12 +1,21 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import TableStaff from '@/Components/TableStaff';
 import PrimaryButton from '@/Components/PrimaryButton';
-
+import Alert from '@/Components/Alert';
+import { useEffect, useState } from 'react';
 export default function Dashboard({ auth, title, users }) {
     // if (auth.user.position_id !== 1) {
     //     window.location.href = "http://127.0.0.1:8000/presence";
     // }
+    const { flash } = usePage().props
+
+    const [alert, setAlert] = useState(flash.message)
+
+    const closeAlert = () => {
+        setAlert(null)
+    }
+    
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -26,6 +35,7 @@ export default function Dashboard({ auth, title, users }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
+                            {alert && <Alert flash={flash} onClose={closeAlert}/>}
                             <TableStaff users={users} />
                         </div>
                     </div>
