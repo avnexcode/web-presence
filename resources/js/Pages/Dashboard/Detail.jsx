@@ -35,6 +35,7 @@ export default function Detail({ auth, title, user }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900 flex flex-col gap-3">
+
                             <div className='flex flex-col gap-1'>
                                 <InputLabel htmlFor="nik" value="Nomor Induk Karyawan" />
                                 <TextInput
@@ -47,8 +48,22 @@ export default function Detail({ auth, title, user }) {
                                     readOnly
                                 />
                             </div>
+
                             <div className='flex flex-col gap-1'>
-                                <InputLabel htmlFor="nik" value="NAMA" />
+                                <InputLabel htmlFor="positions" value="Jabatan" />
+                                <TextInput
+                                    id="positions"
+                                    name="positions"
+                                    value={user.positions[0].position}
+                                    type="text"
+                                    className="mt-1 block w-full"
+                                    autoComplete="current-password"
+                                    readOnly
+                                />
+                            </div>
+
+                            <div className='flex flex-col gap-1'>
+                                <InputLabel htmlFor="nik" value="Nama Lengkap" />
                                 <TextInput
                                     id="name"
                                     name="name"
@@ -59,6 +74,7 @@ export default function Detail({ auth, title, user }) {
                                     readOnly
                                 />
                             </div>
+
                             <div className='flex flex-col gap-1'>
                                 <InputLabel htmlFor="nik" value="Email" />
                                 <TextInput
@@ -71,6 +87,7 @@ export default function Detail({ auth, title, user }) {
                                     readOnly
                                 />
                             </div>
+                            
                             <div className='flex flex-col gap-1'>
                                 <InputLabel htmlFor="address" value="Alamat" />
                                 <TextInput
@@ -83,6 +100,46 @@ export default function Detail({ auth, title, user }) {
                                     readOnly
                                 />
                             </div>
+
+                            <div className='flex flex-col gap-1'>
+                                <InputLabel htmlFor="phone" value="Nomor HP" />
+                                <TextInput
+                                    id="phone"
+                                    name="phone"
+                                    value={user.phone || ""}
+                                    type="text"
+                                    className="mt-1 block w-full"
+                                    autoComplete="current-password"
+                                    readOnly
+                                />
+                            </div>
+
+                            <div className='flex flex-col gap-1'>
+                                <InputLabel htmlFor="gender" value="Jenis Kelainan" />
+                                <TextInput
+                                    id="gender"
+                                    name="gender"
+                                    value={user.gender || ""}
+                                    type="text"
+                                    className="mt-1 block w-full"
+                                    autoComplete="current-password"
+                                    readOnly
+                                />
+                            </div>
+
+                            <div className='flex flex-col gap-1'>
+                                <InputLabel htmlFor="old" value="Usia" />
+                                <TextInput
+                                    id="old"
+                                    name="old"
+                                    value={user.old || ""}
+                                    type="text"
+                                    className="mt-1 block w-full"
+                                    autoComplete="current-password"
+                                    readOnly
+                                />
+                            </div>
+
                             <div className='flex justify-end mt-5'>
 
                                 <DangerButton onClick={confirmUserDeletion}>Hapus Data Karyawan</DangerButton>

@@ -19,8 +19,8 @@ class UserResource extends JsonResource
             'nik' => $this->nik,
             'name' => $this->name,
             'email' => $this->email,
-            'position' => $this->whenLoaded('position', function () {
-                return new PositionResource($this->position);
+            'positions' => $this->whenLoaded('positions', function () {
+                return new PositionResource($this->positions);
             }),
         ];
     }

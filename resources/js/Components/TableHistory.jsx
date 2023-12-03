@@ -5,6 +5,7 @@ import { TbReload } from 'react-icons/tb'
 import Sorting from './Sorting'
 import Paginator from './Paginator'
 export default function TableHistory({users}) {
+    users.data.map(item => console.log(item.positions[0].staff[0].presensi))
   return (
     <>
          <div className="flex flex-col">
@@ -17,7 +18,7 @@ export default function TableHistory({users}) {
                                         <TbReload />
                                     </PrimaryButton>
                                 </Link>
-                                <form action="/dashboard" className="relative w-full" method="get">
+                                <form action="/dashboard/riwayat" className="relative w-full" method="get">
                                     <label className="sr-only">Search</label>
                                     <input type="text" name="search" id="search" className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Pencarian" />
                                     <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
@@ -43,7 +44,10 @@ export default function TableHistory({users}) {
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{index + 1}</td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{user.nik}</td>
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm text-gray-800">{user.name.toUpperCase()}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-green-500">Hadir</td>
+                                                    {user.positions[0].staff[0].presensi ?
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-green-500">Hadir</td> :
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500">Tidak Hadir</td>
+                                                    }
                                                 </tr>
                                             )
                                         })}

@@ -11,9 +11,11 @@ class Position extends Model
     protected $table = 'positions';
     protected $primaryKey = 'id';
 
+    // protected $with = ['admins', 'users', 'staff'];
+
     public function users()
     {
-        return $this->hasMany(User::class, 'position_id', 'id');
+      return $this->belongsToMany(User::class, 'user_positions', 'position_id', 'user_nik');
     }
 
     public function admins()

@@ -12,7 +12,7 @@ class Staff extends Model
 
     protected $table = 'staff';
     protected $primaryKey = 'staff_id';
-    public function position()
+    public function positions()
     {
         return $this->belongsTo(Position::class, 'position_id', 'id');
     }

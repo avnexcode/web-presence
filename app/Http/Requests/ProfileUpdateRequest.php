@@ -18,28 +18,51 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => [
-                'required', 
-                'string', 
-                'max:255'],
+                'required',
+                'string',
+                'max:255'
+            ],
             'email' => [
-                'required', 
-                'string', 
-                'lowercase', 
-                'email', 
-                'max:255', 
-                Rule::unique(User::class)->ignore($this->user()->nik)],
+                'required',
+                'string',
+                'lowercase',
+                'email:dns',
+                'max:255',
+                Rule::unique(User::class)->ignore($this->user()->nik)
+            ],
             // no hp
             'phone' => [
                 'nullable',
-                'max:255', 
-                Rule::unique(User::class)->ignore($this->user()->nik)],
+                'max:255',
+                Rule::unique(User::class)->ignore($this->user()->nik)
+            ],
+            'profile_image' => [
+                'nullable',
+                'image',
+                'max:2048'
+            ],
+            'address' => [
+                'nullable',
+                'max:255'
+            ],
+            'gender' => [
+                'nullable',
+                'max:255'
+            ],
+            'old' => [
+                'nullable',
+                'max:255'
+            ],
         ];
     }
     public function messages(): array
-{
-    return [
-        'email.unique' => 'Alamat email sudah digunakan oleh staff lain.',
-        'phone.unique' => 'Nomor HP sudah digunakan oleh staff lain.',
-    ];
-}
+    {
+        return [
+            'name.required' => 'Kolom nama harus diisi.',
+            'email.required' => 'Kolom email harus diisi.',
+            'email.unique' => 'Alamat email sudah digunakan oleh staff lain.',
+            'email.dns' => 'Format email tidak sesuai.',
+            'phone.unique' => 'Nomor HP sudah digunakan oleh staff lain.',
+        ];
+    }
 }

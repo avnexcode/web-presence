@@ -4,7 +4,7 @@ import TableStaff from '@/Components/TableStaff';
 import PrimaryButton from '@/Components/PrimaryButton';
 import Alert from '@/Components/Alert';
 import { useEffect, useState } from 'react';
-export default function Dashboard({ auth, title, users }) {
+export default function Dashboard({ auth, title, users}) {
     // if (auth.user.position_id !== 1) {
     //     window.location.href = "http://127.0.0.1:8000/presence";
     // }
@@ -15,7 +15,6 @@ export default function Dashboard({ auth, title, users }) {
     const closeAlert = () => {
         setAlert(null)
     }
-    
     return (
         <AuthenticatedLayout
             user={auth.user}

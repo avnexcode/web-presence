@@ -5,6 +5,8 @@ import ProfilePicture from './ProfilePicture';
 import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
+import FileInput from '@/Components/FileInput';
+import profileImage from "@/assets/image/eks.jpg"
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
@@ -13,6 +15,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         email: user.email,
         address: user.address,
         phone: user.phone,
+        // profile_image: user.profile_image,
         gender: user.gender,
         old: user.old
     });
@@ -21,23 +24,23 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        const formData = new FormData();
+
+        formData.append('profile_image', data.profile_image);
+      
+        patch(route('profile.update'), formData);
     };
 
     return (
         <section className={className}>
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Profile Information</h2>
-
+                <h2 className="text-lg font-medium text-gray-900">Informasi Pengguna</h2>
                 <p className="mt-1 text-sm text-gray-600">
-                    Update your account's profile information and email address.
+                    Lengkapi dan perbarui data diri anda.
                 </p>
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6" encType="multipart/form-data">
-                <div>
-                    <ProfilePicture />
-                </div>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -74,7 +77,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <TextInput
                         id="address"
                         type="text"
-                        className="mt-1 block w-full min-h-[40px]"
+                        className="mt-1 block w-full"
                         value={data.address || ""}
                         onChange={(e) => setData('address', e.target.value)}
                         autoComplete="address"
@@ -88,7 +91,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <TextInput
                         id="phone"
                         type="text"
-                        className="mt-1 block w-full min-h-[40px]"
+                        className="mt-1 block w-full"
                         value={data.phone || ""}
                         onChange={(e) => setData('phone', e.target.value)}
                         autoComplete="phone"
@@ -97,9 +100,22 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </div>
 
                 <div>
+                    <InputLabel htmlFor="profile_image" value="Profile Image" />
+                    <img src={data.profile_image || profileImage} alt="profile" className='w-[200px] h-[250px] border mb-2 rounded-md object-cover'/>
+                    <FileInput
+                        id="profile_image"
+                        type="file"
+                        className="mt-1 block w-full border file:border-none cursor-pointer file:p-2 file:cursor-pointer"
+                        // value={data.profile_image || ""}
+                        onChange={(e) => setData('profile_image', e.target.files[0])}
+                    />
+                    <InputError className="mt-2" message={errors.profile_image} />
+                </div>
+
+                <div>
                     {/* <InputLabel htmlFor="gender" value="Jenis Kelamin" /> */}
 
-                    <select name="gender" id="gender" defaultValue={data.gender || ""} onChange={e => {setData('gender', e.target.value)}}  className='mt-1 block w-full min-h-[40px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
+                    <select name="gender" id="gender" defaultValue={data.gender || ""} onChange={e => { setData('gender', e.target.value) }} className='mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
                         <option value="">Jenis Kelamin</option>
                         <option value="Laki - Laki">Laki - Laki</option>
                         <option value="Prempuan">Perempuan</option>
@@ -114,7 +130,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <TextInput
                         id="old"
                         type="text"
-                        className="mt-1 block w-full min-h-[40px]"
+                        className="mt-1 block w-full"
                         value={data.old || ""}
                         onChange={(e) => setData('old', e.target.value)}
                     />

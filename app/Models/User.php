@@ -30,6 +30,7 @@ class User extends Authenticatable
         'phone',
         'gender',
         'old',
+        'profile_image',
         'password',
     ];
 
@@ -54,9 +55,17 @@ class User extends Authenticatable
     ];
 
     protected $guarded = ['nik'];
-    // protected $with = ['manager', 'admin', 'staff'];
-    public function position() {
-        return $this->belongsTo(Position::class, 'position_id', 'id');
+    protected $with = ['positions', 'positions.admins', 'positions.staff'];
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($user) {
+            $user->position()->detach();
+        });
+    }
+    public function positions() 
+    {
+      return $this->belongsToMany(Position::class, 'user_positions', 'user_nik', 'position_id');
     }
 
     public function scopeFilter($query, array $filters)

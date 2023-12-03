@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Inertia\Controller;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
+use App\Models\Position;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
@@ -14,7 +15,8 @@ use Illuminate\Support\Facades\Redirect;
 class DashboardController extends Controller
 {
     public function dashboard(User $user) {
-        $users = $user->with('position')
+        $users = $user->with(['positions'])
+        ->whereHas('positions.staff')
         ->filter(request(['search']))
         ->paginate(6)
         ->withQueryString();
@@ -22,6 +24,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Dashboard', [
             'title' => 'Dashboard',
             'users' => UserResource::collection($users),
+            'positions' => Position::class
         ]);
     }
 
@@ -33,7 +36,8 @@ class DashboardController extends Controller
     }
 
     public function history(User $user) {
-        $users = $user->with('position')
+        $users = $user->with(['positions'])
+        ->whereHas('positions.staff')
         ->filter(request(['search']))
         ->paginate(6)
         ->withQueryString();
