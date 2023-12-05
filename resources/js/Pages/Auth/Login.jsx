@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
@@ -27,7 +27,16 @@ export default function Login({ status, canResetPassword }) {
         post(route('login'));
     };
 
-    
+    const [typePassword, setTypePassword] = useState(true)
+
+    const typePasswordHandle = () => {
+        if (typePassword){
+            setTypePassword(false)
+        } else {
+            setTypePassword(true)
+        }
+        console.log(typePassword)
+    }
 
     return (
         <div className='flex justify-center min-h-[100vh] max-h-[100vh] overflow-hidden'>
@@ -61,13 +70,14 @@ export default function Login({ status, canResetPassword }) {
 
                         <TextInput
                             id="password"
-                            type="password"
+                            type={typePassword ? 'text' : 'password'}
                             name="password"
                             value={data.password}
                             className="mt-1 block w-full sm:min-w-[350px]"
                             autoComplete="current-password"
                             onChange={(e) => setData('password', e.target.value)}
                         />
+                        <button type='button' onClick={typePasswordHandle}>show</button>
 
                         <InputError message={errors.password} className="mt-2" />
                     </div>
