@@ -80,7 +80,7 @@ return new class extends Migration
         
             $table->string('presensi');
             $table->date('date');
-            $table->dateTime('time');
+            $table->time('time');
             
             $table->timestamps();
         });

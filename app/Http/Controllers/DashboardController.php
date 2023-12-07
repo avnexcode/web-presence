@@ -9,8 +9,6 @@ use App\Models\Position;
 use App\Models\Attendance;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Resources\AttendanceResource;
 
@@ -27,7 +25,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Dashboard', [
             'title' => 'Dashboard',
             'users' => UserResource::collection($users),
-            'positions' => Position::class
+            'positions' => Position::all(), // Jika ingin mengirim semua posisi
         ]);
     }
 
@@ -43,6 +41,7 @@ class DashboardController extends Controller
     {
         $attendances = Attendance::with('user')
             ->filter(request(['search']))
+            ->selectRaw('*, DATE_FORMAT(date, "%d-%m-%Y") as formatted_date')
             ->paginate(5)
             ->withQueryString();
 

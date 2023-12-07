@@ -43,20 +43,22 @@ export default function TableHistory({ attendances }) {
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 ">
                                         {presences.map((presence, index) => {
+                                            const formattedDate = new Date(presence.date).toLocaleDateString('en-GB');
+
                                             return (
                                                 <tr key={index} className="[&>*]:text-left">
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{index + 1}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.user_nik.nik}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.user_nik.name}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.date}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.time}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{index + 1}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.user_nik.nik}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.user_nik.name}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{formattedDate}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.time}</td>
                                                     {
                                                         presence.presensi === "Datang" ?
-                                                            <td className=" px-6 py-4 whitespace-nowrap text-sm text-green-500 font-bold">{presence.presensi}</td> :
-                                                            <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500 font-bold">{presence.presensi}</td>
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-green-500 font-bold">{presence.presensi}</td> :
+                                                            <td className="px-6 py-4 whitespace-nowrap text-sm text-red-500 font-bold">{presence.presensi}</td>
                                                     }
                                                 </tr>
-                                            )
+                                            );
                                         })}
                                     </tbody>
                                 </table>
