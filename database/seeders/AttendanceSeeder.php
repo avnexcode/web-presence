@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Attendance;
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Faker\Factory as Faker;
+
 class AttendanceSeeder extends Seeder
 {
     /**
@@ -14,21 +16,15 @@ class AttendanceSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
+        $users = User::all();
 
-        Attendance::create([
-            'user_nik' => 22104410014,
-            'presensi' => $faker->randomElement(['Datang', 'Pulang']),
-            'waktu' => $faker->dateTimeThisMonth(),
-        ]);
-        Attendance::create([
-            'user_nik' => 22104410014,
-            'presensi' => $faker->randomElement(['Datang', 'Pulang']),
-            'waktu' => $faker->dateTimeThisMonth(),
-        ]);
-        Attendance::create([
-            'user_nik' => 22104410014,
-            'presensi' => $faker->randomElement(['Datang', 'Pulang']),
-            'waktu' => $faker->dateTimeThisMonth(),
-        ]);
+        foreach ($users as $user) {
+            Attendance::create([
+                'user_nik' => $user->nik,
+                'presensi' => $faker->randomElement(['Datang', 'Pulang']),
+                'date' => $faker->date,
+                'time' => $faker->dateTimeThisMonth(),
+            ]);
+        }
     }
 }

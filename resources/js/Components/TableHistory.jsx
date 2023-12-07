@@ -1,19 +1,21 @@
 import React from 'react'
-import {Link} from "@inertiajs/react"
+import { Link } from "@inertiajs/react"
 import PrimaryButton from './PrimaryButton'
 import { TbReload } from 'react-icons/tb'
 import Sorting from './Sorting'
 import Paginator from './Paginator'
-export default function TableHistory({users}) {
-    users.data.map(item => console.log(item.positions[0].staff[0].presensi))
-  return (
-    <>
-         <div className="flex flex-col">
+export default function TableHistory({ attendances }) {
+    const presences = attendances.data
+    // console.log(attendances)
+    // console.log(presences)
+    return (
+        <>
+            <div className="flex flex-col">
                 <div className="-m-1.5 overflow-x-auto">
                     <div className="p-1.5 min-w-full inline-block align-middle">
                         <div className="border rounded-lg divide-y divide-gray-200">
                             <div className="py-3 px-4 flex justify-between items-center gap-2">
-                                <Link href="/dashboard">
+                                <Link href="/dashboard/riwayat">
                                     <PrimaryButton className="text-xl">
                                         <TbReload />
                                     </PrimaryButton>
@@ -34,19 +36,24 @@ export default function TableHistory({users}) {
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NO</th>
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NIK</th>
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NAME</th>
+                                            <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Tanggal</th>
+                                            <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Waktu</th>
                                             <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Presensi</th>
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 ">
-                                        {users.data.map((user, index) => {
+                                        {presences.map((presence, index) => {
                                             return (
                                                 <tr key={index} className="[&>*]:text-left">
                                                     <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{index + 1}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{user.nik}</td>
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-gray-800">{user.name.toUpperCase()}</td>
-                                                    {user.positions[0].staff[0].presensi ?
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-green-500">Hadir</td> :
-                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500">Tidak Hadir</td>
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.user_nik.nik}</td>
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.user_nik.name}</td>
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.date}</td>
+                                                    <td className=" px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{presence.time}</td>
+                                                    {
+                                                        presence.presensi === "Datang" ?
+                                                            <td className=" px-6 py-4 whitespace-nowrap text-sm text-green-500 font-bold">{presence.presensi}</td> :
+                                                            <td className=" px-6 py-4 whitespace-nowrap text-sm text-red-500 font-bold">{presence.presensi}</td>
                                                     }
                                                 </tr>
                                             )
@@ -55,12 +62,12 @@ export default function TableHistory({users}) {
                                 </table>
                             </div>
                             <div className="py-4 px-4 flex justify-start">
-                                <Paginator users={users} />
+                                <Paginator users={attendances} />
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </>
-  )
+        </>
+    )
 }

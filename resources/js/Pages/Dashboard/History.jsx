@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import TableHistory from '@/Components/TableHistory';
 
-export default function History({ auth, title, users }) {
+export default function History({ auth, title, attendances }) {
     const user = auth.user
     const userPosition = user.positions[0].position
 
@@ -10,6 +10,7 @@ export default function History({ auth, title, users }) {
         document.location.href = 'http://127.0.0.1:8000/presence'
         return 
     }
+    // console.log(attendances)
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -26,7 +27,7 @@ export default function History({ auth, title, users }) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <TableHistory users={users}/>
+                            <TableHistory attendances={attendances}/>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,7 @@
 import { Link } from "@inertiajs/react";
 
 export default function Paginator({ users }) {
+  // console.log(users)
   const { prev, next } = users.links;
   const { current_page } = users.meta
   return (

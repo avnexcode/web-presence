@@ -26,13 +26,21 @@ class PresenceController extends Controller
     {
         $request->validate([
             'nik' => 'required',
+            'presensi' => 'required',
+            'date' => 'required',
+            'time' => 'required',
             'password' => 'required'
+        ], [
+            'presensi.required' => "Pilihan tidak sesuai.",
+            'date.required' => 'Tanggal wajib di isi',
+            'time.required' => 'Waktu wajib di isi',
+            'password.required' => 'Password wajib di isi',
         ]);
     
         $user = User::where('nik', $request->nik)->first();
     
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return Redirect::back()->with('error', 'Invalid credentials');
+            return Redirect::back()->with('error', 'Password tidak sesuai');
         }
         
         $attendance = [
@@ -42,11 +50,8 @@ class PresenceController extends Controller
             'time' => $request->time,
         ];
         
-        dd($attendance);
-        dd($user->name);
-        
-        Attendance::created($attendance);
+        Attendance::create($attendance);
     
-        return Redirect::to('/dashboard/presence');
+        return Redirect::to('/presence')->with('message', 'Presensi Berhasil.');
     }
 }

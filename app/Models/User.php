@@ -66,6 +66,12 @@ class User extends Authenticatable
     {
       return $this->belongsToMany(Position::class, 'user_positions', 'user_nik', 'position_id');
     }
+    
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class, 'user_nik', 'nik');
+    }
+
 
     public function scopeFilter($query, array $filters)
     {
