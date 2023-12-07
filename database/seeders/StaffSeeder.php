@@ -16,7 +16,6 @@ class StaffSeeder extends Seeder
         Staff::create([
             'staff_id' => 'stf001',
             'position_id' => 2,
-            'presensi' => false
         ]);  
     }
 }

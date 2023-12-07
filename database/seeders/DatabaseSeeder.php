@@ -6,8 +6,13 @@ namespace Database\Seeders;
 use App\Models\Admin;
 use App\Models\Staff;
 use Illuminate\Database\Seeder;
+use Database\Seeders\AdminSeeder;
+use Database\Seeders\StaffSeeder;
 use Database\Seeders\UsersSeeder;
+use Database\Seeders\PositionSeeder;
 use Illuminate\Foundation\Auth\User;
+use Database\Seeders\AttendanceSeeder;
+use Database\Seeders\UserPositionSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -57,7 +62,8 @@ class DatabaseSeeder extends Seeder
             PositionSeeder::class,
             AdminSeeder::class,
             StaffSeeder::class,
-            UserPositionSeeder::class
+            UserPositionSeeder::class,
+            AttendanceSeeder::class,
         ]);
     }
 }

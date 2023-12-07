@@ -12,4 +12,9 @@ class UserPosition extends Model
     protected $table = "user_positions";
     protected $primaryKey = 'id';
 
+    protected $fillable = [
+        'user_nik',
+        'position_id',
+    ];
+
 }

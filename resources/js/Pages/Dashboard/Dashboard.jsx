@@ -5,9 +5,16 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import Alert from '@/Components/Alert';
 import { useEffect, useState } from 'react';
 export default function Dashboard({ auth, title, users}) {
-    // if (auth.user.position_id !== 1) {
-    //     window.location.href = "http://127.0.0.1:8000/presence";
-    // }
+    
+    const user = auth.user
+    const userPosition = user.positions[0].position
+
+    if(userPosition !== 'admin') {
+        document.location.href = 'http://127.0.0.1:8000/presence'
+        return
+    }
+
+
     const { flash } = usePage().props
 
     const [alert, setAlert] = useState(flash.message)
@@ -15,6 +22,7 @@ export default function Dashboard({ auth, title, users}) {
     const closeAlert = () => {
         setAlert(null)
     }
+
     return (
         <AuthenticatedLayout
             user={auth.user}

@@ -6,6 +6,8 @@ import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
 export default function Authenticated({ user, header, children }) {
+    const userPosition = user.positions[0].position
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     return (
         <div className="min-h-screen bg-gray-100">
@@ -18,17 +20,25 @@ export default function Authenticated({ user, header, children }) {
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
-
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                                <NavLink href={route('presence')} active={route().current('presence')}>
-                                    Presensi
-                                </NavLink>
-                                <NavLink href={route('history')} active={route().current('history')}>
-                                    Histori Presensi
-                                </NavLink>
+                                {userPosition === 'admin' &&
+                                    <>
+                                        <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                            Dashboard
+                                        </NavLink>
+                                        <NavLink href={route('history')} active={route().current('history')}>
+                                            Riwayat Presensi
+                                        </NavLink>
+                                        <NavLink href={route('statement')} active={route().current('statement')}>
+                                            Laporan
+                                        </NavLink>
+                                    </>
+                                }
+                                {userPosition === 'staff' &&
+                                    <NavLink href={route('presence')} active={route().current('presence')}>
+                                        Presensi
+                                    </NavLink>
+                                }
                             </div>
                         </div>
 
@@ -41,7 +51,7 @@ export default function Authenticated({ user, header, children }) {
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {user.name}
+                                                {user.name.toUpperCase()}
 
                                                 <svg
                                                     className="ms-2 -me-0.5 h-4 w-4"

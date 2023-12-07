@@ -15,42 +15,73 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('nik')->primary();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->unique(); 
             $table->timestamp('email_verified_at')->nullable();
             $table->string('profile_image')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->unique()->nullable();
             $table->string('gender')->nullable();
             $table->string('old')->nullable();
-            $table->string('password');
+            $table->string('password');   
             $table->timestamps();
         });
         
         Schema::create('positions', function (Blueprint $table) {
             $table->id();
             $table->string('position');
-            $table->timestamps();
+            $table->timestamps(); 
         });
         
         Schema::create('user_positions', function (Blueprint $table) {
             $table->id();
             $table->string('user_nik');
-            $table->foreign('user_nik')->references('nik')->on('users');
-            $table->foreignId('position_id')->constrained('positions');
+            $table->foreign('user_nik') 
+                ->references('nik')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+                
+            $table->foreignId('position_id')
+                ->constrained('positions')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');  
             $table->timestamps();
         });
         
         Schema::create('admins', function (Blueprint $table) {
             $table->string('admin_id')->primary();
-            $table->foreignId('position_id')->constrained('positions');
+            
+            $table->foreignId('position_id')
+                ->constrained('positions')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+                
             $table->string('arsip');
             $table->timestamps();
-        });
+        }); 
         
         Schema::create('staff', function (Blueprint $table) {
             $table->string('staff_id')->primary();
-            $table->foreignId('position_id')->constrained('positions');
-            $table->boolean('presensi');
+            
+            $table->foreignId('position_id')
+                ->constrained('positions')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+                
+            $table->timestamps();
+        });
+
+        Schema::create('attendances', function (Blueprint $table) {
+            $table->id();
+            $table->string('user_nik');
+            $table->foreign('user_nik')
+                ->references('nik')->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+        
+            $table->string('presensi');
+            $table->date('date');
+            $table->dateTime('time');
+            
             $table->timestamps();
         });
     }

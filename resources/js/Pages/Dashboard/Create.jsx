@@ -14,7 +14,7 @@ export default function Create({ auth, title, users }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         nik: '2210441002',
         name: 'Ronaldo Wati',
-        email: 'axnvee18@gmail.com',
+        email: 'wati@gmail.com',
         password: 'password',
         password_confirmation: 'password',
     });

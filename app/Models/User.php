@@ -60,7 +60,7 @@ class User extends Authenticatable
     {
         parent::boot();
         static::deleting(function ($user) {
-            $user->position()->detach();
+            $user->positions()->detach();
         });
     }
     public function positions() 

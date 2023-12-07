@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/presence', [PresenceController::class, 'index'])->name('presence');
 
+    Route::post('/presence', [PresenceController::class, 'presence'])->name('presence.submit');
+
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
 
     Route::get('/dashboard/create', [CreateController::class, 'index'])->name('create');
@@ -55,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/delete/{user:nik}', [DashboardController::class, 'destroy'])->name('dashboard.destroy');
 
     Route::get('/dashboard/riwayat', [DashboardController::class, 'history'])->name('history');
+
+    Route::get('dashboard/laporan', [DashboardController::class, 'statement'])->name('statement');
 
 });
 

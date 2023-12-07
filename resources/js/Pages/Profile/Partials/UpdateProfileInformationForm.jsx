@@ -24,11 +24,11 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const submit = (e) => {
         e.preventDefault();
 
-        const formData = new FormData();
+        // const formData = new FormData();
 
-        formData.append('profile_image', data.profile_image);
+        // formData.append('profile_image', data.profile_image);
       
-        patch(route('profile.update'), formData);
+        patch(route('profile.update'));
     };
 
     return (
@@ -118,7 +118,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     <select name="gender" id="gender" defaultValue={data.gender || ""} onChange={e => { setData('gender', e.target.value) }} className='mt-1 block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm'>
                         <option value="">Jenis Kelamin</option>
                         <option value="Laki - Laki">Laki - Laki</option>
-                        <option value="Prempuan">Perempuan</option>
+                        <option value="Perempuan">Perempuan</option>
                         <option value="Lainnya">Lainnya</option>
                     </select>
                     <InputError className="mt-2" message={errors.gender} />

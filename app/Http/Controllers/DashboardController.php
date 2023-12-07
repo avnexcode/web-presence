@@ -47,6 +47,12 @@ class DashboardController extends Controller
         ]);
     }
 
+    public function statement(){
+        return Inertia::render('Dashboard/Statement', [
+            'title' => 'Laporan'
+        ]);
+    }
+
     public function destroy(User $user)  
     {   
         $user->delete();
