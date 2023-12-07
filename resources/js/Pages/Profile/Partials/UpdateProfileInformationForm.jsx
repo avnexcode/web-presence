@@ -7,6 +7,8 @@ import { Link, useForm, usePage } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
 import FileInput from '@/Components/FileInput';
 import profileImage from "@/assets/image/eks.jpg"
+import Alert from '@/Components/Alert';
+import { useState } from 'react'
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }) {
     const user = usePage().props.auth.user;
@@ -15,29 +17,29 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         email: user.email,
         address: user.address,
         phone: user.phone,
-        // profile_image: user.profile_image,
         gender: user.gender,
         old: user.old
     });
+
     console.log(data)
 
     const submit = (e) => {
         e.preventDefault();
-
-        // const formData = new FormData();
-
-        // formData.append('profile_image', data.profile_image);
-      
         patch(route('profile.update'));
     };
+    const [alert, setAlert] = useState(true)
+
+    const closeAlert = () => {
+        setAlert(false)
+    }
 
     return (
         <section className={className}>
             <header>
                 <h2 className="text-lg font-medium text-gray-900">Informasi Pengguna</h2>
-                <p className="mt-1 text-sm text-gray-600">
-                    Lengkapi dan perbarui data diri anda.
-                </p>
+                {alert &&
+                <Alert onClose={closeAlert} flash={{message: 'Lengkapi data diri anda.'}}/>
+                }
             </header>
 
             <form onSubmit={submit} className="mt-6 space-y-6" encType="multipart/form-data">
@@ -101,7 +103,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
                 <div>
                     <InputLabel htmlFor="profile_image" value="Profile Image" />
-                    <img src={data.profile_image || profileImage} alt="profile" className='w-[200px] h-[250px] border mb-2 rounded-md object-cover'/>
+                    <img src={data.profile_image || profileImage} alt="profile" className='w-[200px] h-[250px] border mb-2 rounded-md object-cover' />
                     <FileInput
                         id="profile_image"
                         type="file"

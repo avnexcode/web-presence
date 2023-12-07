@@ -30,7 +30,6 @@ class User extends Authenticatable
         'phone',
         'gender',
         'old',
-        'profile_image',
         'password',
     ];
 
