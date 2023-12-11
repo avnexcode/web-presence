@@ -30,7 +30,7 @@ export default function Login({ status, canResetPassword }) {
     const [typePassword, setTypePassword] = useState(false)
 
     const typePasswordHandle = () => {
-        if (typePassword){
+        if (typePassword) {
             setTypePassword(false)
         } else {
             setTypePassword(true)
@@ -67,22 +67,23 @@ export default function Login({ status, canResetPassword }) {
 
                     <div className="mt-4">
                         <InputLabel htmlFor="password" value="Password" />
-
-                        <TextInput
-                            id="password"
-                            type={typePassword ? 'text' : 'password'}
-                            name="password"
-                            value={data.password}
-                            className="mt-1 block w-full sm:min-w-[350px]"
-                            autoComplete="current-password"
-                            onChange={(e) => setData('password', e.target.value)}
-                        />
-                        <button type='button' onClick={typePasswordHandle}>show</button>
+                        <div className='relative flex items-center'>
+                            <TextInput
+                                id="password"
+                                type={typePassword ? 'text' : 'password'}
+                                name="password"
+                                value={data.password}
+                                className="mt-1 block w-full sm:min-w-[350px]"
+                                autoComplete="current-password"
+                                onChange={(e) => setData('password', e.target.value)}
+                            />
+                            <button type='button' onClick={typePasswordHandle} className={`absolute right-3 hover:scale-105 font-onest ${typePassword? 'text-gray-500' : 'text-black'}`}>{typePassword ? 'Hide' : 'Show'}</button>
+                        </div>
 
                         <InputError message={errors.password} className="mt-2" />
                     </div>
 
-                    <div className="block mt-4">
+                    <div className="block mt-8">
                         <label className="flex items-center">
                             <Checkbox
                                 name="remember"

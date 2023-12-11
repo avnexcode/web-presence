@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $attendances = Attendance::with('user')
             ->filter(request(['search']))
             ->selectRaw('*, DATE_FORMAT(date, "%d-%m-%Y") as formatted_date')
-            ->paginate(5)
+            ->paginate(30)
             ->withQueryString();
 
         return Inertia::render('Dashboard/History', [

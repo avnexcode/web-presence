@@ -30,6 +30,10 @@ export default {
             },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                caveat: ["Caveat", 'cursive'],
+                poppins: ["Poppins", 'sans-serif'],
+                onest: ["Onest", 'sans-serif']
+
             },
         },
     },

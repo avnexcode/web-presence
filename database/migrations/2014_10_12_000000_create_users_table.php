@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('phone')->unique()->nullable();
             $table->string('gender')->nullable();
             $table->string('old')->nullable();
-            $table->string('password');   
+            $table->string('password');
+            $table->rememberToken();
             $table->timestamps();
         });
         

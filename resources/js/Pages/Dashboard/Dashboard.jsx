@@ -10,15 +10,10 @@ export default function Dashboard({ auth, title, users}) {
     const userPosition = user.positions[0].position
 
     if(userPosition !== 'admin') {
-        document.location.href = 'http://127.0.0.1:8000/presence'
-        return
+        return document.location.href = 'http://127.0.0.1:8000/presence'
     }
-
-
     const { flash } = usePage().props
-
     const [alert, setAlert] = useState(flash.message)
-
     const closeAlert = () => {
         setAlert(null)
     }
