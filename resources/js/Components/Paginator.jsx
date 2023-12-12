@@ -1,9 +1,9 @@
 import { Link } from "@inertiajs/react";
+import { useState } from "react";
 
 export default function Paginator({ users }) {
-  // console.log(users)
   const { prev, next } = users.links;
-  const { current_page } = users.meta
+  const { current_page, links } = users.meta
   return (
     <nav className="flex items-center space-x-1">
       {prev ? (
@@ -25,14 +25,20 @@ export default function Paginator({ users }) {
           <span className="sr-only">Previous</span>
         </button>
       )}
-      {(prev || next) && <Link
-        href={current_page}
-        type="button"
-        className={`min-w-[40px] flex justify-center items-center text-gray-800 hover:bg-gray-100 py-2.5 text-sm rounded-full`}
-      >
-        {current_page}
-      </Link>}
-
+      {links.map((link, index) => {
+        if (index > 0 && index < links.length - 1) {
+          return (
+            <Link
+              key={index}
+              href={link.url}
+              type="button"
+              className={`min-w-[40px] flex justify-center items-center hover:bg-gray-100 py-2.5 text-sm rounded-full ${link.active ? 'text-gray-400' : 'text-gray-800'}`}
+            >
+              {link.label}
+            </Link>
+          )
+        }
+      })}
       {next ? (
         <Link
           href={next}

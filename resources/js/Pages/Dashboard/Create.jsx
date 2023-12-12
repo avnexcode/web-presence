@@ -12,12 +12,19 @@ export default function Create({ auth, title, users }) {
     //     window.location.href = "http://127.0.0.1:8000/presence";
     // }
     const { data, setData, post, processing, errors, reset } = useForm({
-        nik: '2210441002',
-        name: 'Ronaldo Wati',
-        email: 'wati@gmail.com',
-        password: 'password',
-        password_confirmation: 'password',
+        nik: '',
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
     });
+    // const { data, setData, post, processing, errors, reset } = useForm({
+    //     nik: '2210441002',
+    //     name: 'Ronaldo Wati',
+    //     email: 'wati@gmail.com',
+    //     password: 'password',
+    //     password_confirmation: 'password',
+    // });
     console.log(errors)
     // const { data, setData, post, processing, errors, reset } = useForm({
     //     nik: '22104411100',

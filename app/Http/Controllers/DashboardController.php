@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $users = $user->with(['positions'])
             ->whereHas('positions.staff')
             ->filter(request(['search']))
-            ->paginate(6)
+            ->paginate(10)
             ->withQueryString();
 
         return Inertia::render('Dashboard/Dashboard', [
@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $attendances = Attendance::with('user')
             ->filter(request(['search']))
             ->selectRaw('*, DATE_FORMAT(date, "%d-%m-%Y") as formatted_date')
-            ->paginate(30)
+            ->paginate(2232)
             ->withQueryString();
 
         return Inertia::render('Dashboard/History', [

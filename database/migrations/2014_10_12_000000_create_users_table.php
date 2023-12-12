@@ -40,7 +40,6 @@ return new class extends Migration
                 ->references('nik')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-                
             $table->foreignId('position_id')
                 ->constrained('positions')
                 ->onDelete('cascade')
@@ -50,24 +49,20 @@ return new class extends Migration
         
         Schema::create('admins', function (Blueprint $table) {
             $table->string('admin_id')->primary();
-            
             $table->foreignId('position_id')
                 ->constrained('positions')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-                
             $table->string('arsip');
             $table->timestamps();
         }); 
         
         Schema::create('staff', function (Blueprint $table) {
             $table->string('staff_id')->primary();
-            
             $table->foreignId('position_id')
                 ->constrained('positions')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-                
             $table->timestamps();
         });
 
@@ -78,11 +73,9 @@ return new class extends Migration
                 ->references('nik')->on('users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-        
             $table->string('presensi');
             $table->date('date');
             $table->time('time');
-            
             $table->timestamps();
         });
     }

@@ -37,8 +37,8 @@ class AttendanceSeeder extends Seeder
             $date = clone $start_date;
 
             while ($date->lte($end_date)) {
-                $this->createAttendance($nik, 'Datang', $date->copy()->hour(8));
-                $this->createAttendance($nik, 'Pulang', $date->copy()->hour(17));
+                $this->createAttendance($nik, 'Datang', $date->copy()->setHour(6)->setMinute(30)->setSecond(0));
+                $this->createAttendance($nik, 'Pulang', $date->copy()->setHour(15)->setMinute(30)->setSecond(0));
                 $date->addDay();
             }
         }

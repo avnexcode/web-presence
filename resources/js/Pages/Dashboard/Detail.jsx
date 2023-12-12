@@ -115,7 +115,7 @@ export default function Detail({ auth, title, user }) {
                             </div>
 
                             <div className='flex flex-col gap-1'>
-                                <InputLabel htmlFor="gender" value="Jenis Kelainan" />
+                                <InputLabel htmlFor="gender" value="Jenis Kelamin" />
                                 <TextInput
                                     id="gender"
                                     name="gender"
