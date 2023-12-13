@@ -68,6 +68,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('dashboard/laporan', [DashboardController::class, 'statement'])->name('statement');
 
+    Route::get('dashboard/laporan/detail/', [DashboardController::class, 'showLaporan']);
+
 });
 
 require __DIR__.'/auth.php';

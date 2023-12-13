@@ -3,12 +3,13 @@ import { Link } from "@inertiajs/react"
 import PrimaryButton from './PrimaryButton'
 import { TbReload } from 'react-icons/tb'
 import Paginator from './Paginator'
-export default function TableHistory({ attendances }) {
+export default function TableHistory({ attendances, userName }) {
     const [presences, setPresences] = useState(attendances.data);
     const [sort, setSort] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [uniqueNames, setUniqueNames] = useState([]);
+    const [key, setKey] = useState('Ctrl + F')
     const inputRef = useRef();
-
 
     useEffect(() => {
         if (sort === 'nik_asc') {
@@ -46,6 +47,12 @@ export default function TableHistory({ attendances }) {
             setSearchTerm(searchValue);
         }
     }, []);
+
+    useEffect(() => {
+        const names = userName.map((user) => user.name);
+        const uniqueNames = [...new Set(names)];
+        setUniqueNames(uniqueNames);
+    }, [userName]);
 
 
     useEffect(() => {
@@ -86,10 +93,19 @@ export default function TableHistory({ attendances }) {
                                             id="search"
                                             ref={inputRef}
                                             value={searchTerm}
+                                            onFocus={e => setKey('Esc')}
+                                            onBlur={e => setKey('Ctrl + F')}
                                             onChange={(e) => setSearchTerm(e.target.value)}
                                             className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
                                             placeholder="Pencarian"
+                                            autoComplete='off'
+                                            list='nameSuggestions'
                                         />
+                                        <datalist id="nameSuggestions" className='triangle-none'>
+                                            {uniqueNames.map((name, index) => (
+                                                <option key={index} value={name} className='triangle-none' />
+                                            ))}
+                                        </datalist>
                                         <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                                             <svg
                                                 className="h-4 w-4 text-gray-400"
@@ -107,8 +123,8 @@ export default function TableHistory({ attendances }) {
                                                 <path d="m21 21-4.3-4.3" />
                                             </svg>
                                         </div>
-                                        <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
-                                            <span className="text-sm text-gray-400">Ctrl + F</span>
+                                        <div className="absolute inset-y-0 end-0 flex items-center pe-3 text-gray-400">
+                                            {key}
                                         </div>
                                     </div>
                                 </form>

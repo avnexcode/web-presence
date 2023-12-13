@@ -25,6 +25,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Dashboard', [
             'title' => 'Dashboard',
             'users' => UserResource::collection($users),
+            'userName' => $user->whereHas('positions.staff')->get('name'),
             'positions' => Position::all(),
         ]);
     }
@@ -48,6 +49,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/History', [
             'title' => 'Riwayat Presensi',
             'attendances' => AttendanceResource::collection($attendances),
+            'userName' => User::whereHas('positions.staff')->get('name'),
         ]);
     }
 
@@ -62,5 +64,11 @@ class DashboardController extends Controller
     {
         $user->delete();
         return Redirect::route('dashboard')->with('message', 'Data Karyawan Berhasil di Hapus');
+    }
+
+    public function showLaporan() {
+        return Inertia::render('Dashboard/DetailLaporan', [
+            'tile' => 'Detail Laporan'
+        ]);
     }
 }

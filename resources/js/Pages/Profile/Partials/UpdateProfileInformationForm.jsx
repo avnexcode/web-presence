@@ -18,7 +18,8 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         address: user.address,
         phone: user.phone,
         gender: user.gender,
-        old: user.old
+        old: user.old,
+        // profile_image: user.profile_image
     });
 
     console.log(data)

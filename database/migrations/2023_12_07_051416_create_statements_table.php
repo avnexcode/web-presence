@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('statements', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
+            $table->string('crot');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@ import { Head, Link, usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import Alert from '@/Components/Alert';
 import { useEffect, useState } from 'react';
+import TableStatement from '@/Components/TableStatement';
 export default function Dashboard({ auth, title, users}) {
     
     const user = auth.user
@@ -29,7 +30,7 @@ export default function Dashboard({ auth, title, users}) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
-                            <h1>Laporan</h1>
+                            <TableStatement />
                         </div>
                     </div>
                 </div>

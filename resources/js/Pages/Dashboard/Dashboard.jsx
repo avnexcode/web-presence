@@ -4,7 +4,7 @@ import TableStaff from '@/Components/TableStaff';
 import PrimaryButton from '@/Components/PrimaryButton';
 import Alert from '@/Components/Alert';
 import { useEffect, useState } from 'react';
-export default function Dashboard({ auth, title, users}) {
+export default function Dashboard({ auth, title, users, userName}) {
     
     const user = auth.user
     const userPosition = user.positions[0].position
@@ -38,7 +38,7 @@ export default function Dashboard({ auth, title, users}) {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             {alert && <Alert flash={flash} onClose={closeAlert}/>}
-                            <TableStaff users={users} />
+                            <TableStaff users={users} userName={userName}/>
                         </div>
                     </div>
                 </div>
