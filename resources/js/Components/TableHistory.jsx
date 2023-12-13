@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Link } from "@inertiajs/react"
 import PrimaryButton from './PrimaryButton'
 import { TbReload } from 'react-icons/tb'
@@ -6,6 +6,8 @@ import Paginator from './Paginator'
 export default function TableHistory({ attendances }) {
     const [presences, setPresences] = useState(attendances.data);
     const [sort, setSort] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const inputRef = useRef();
 
 
     useEffect(() => {
@@ -36,7 +38,6 @@ export default function TableHistory({ attendances }) {
         }
     }, [sort]);
 
-    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         const searchParams = new URLSearchParams(window.location.search);
@@ -47,6 +48,22 @@ export default function TableHistory({ attendances }) {
     }, []);
 
 
+    useEffect(() => {
+        const handleKeyPress = (e) => {
+            if ((e.key === 'f' || e.key === 'F') && e.ctrlKey) {
+                inputRef.current.focus();
+                e.preventDefault();
+                inputRef.current.focus();
+            } else if (e.key === 'Escape') {
+                setSearchTerm('');
+                inputRef.current.blur();
+            }
+        };
+        document.addEventListener('keydown', handleKeyPress);
+        return () => {
+            document.removeEventListener('keydown', handleKeyPress);
+        };
+    }, []);
 
     return (
         <>
@@ -60,13 +77,42 @@ export default function TableHistory({ attendances }) {
                                         <TbReload />
                                     </PrimaryButton>
                                 </Link>
-                                <form action="/dashboard/riwayat" className="relative w-full" method="get">
+                                <form action="/dashboard/riwayat" className="relative w-full">
                                     <label className="sr-only">Search</label>
-                                    <input type="text" name="search" id="search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Pencarian" />
-                                    <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
-                                        <svg className="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
+                                    <div className="relative">
+                                        <input
+                                            type="text"
+                                            name="search"
+                                            id="search"
+                                            ref={inputRef}
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none"
+                                            placeholder="Pencarian"
+                                        />
+                                        <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
+                                            <svg
+                                                className="h-4 w-4 text-gray-400"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            >
+                                                <circle cx="11" cy="11" r="8" />
+                                                <path d="m21 21-4.3-4.3" />
+                                            </svg>
+                                        </div>
+                                        <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
+                                            <span className="text-sm text-gray-400">Ctrl + F</span>
+                                        </div>
                                     </div>
                                 </form>
+
                                 <form action="/dashboard" className="block relative py-2 px-3 ps-9 w-[30%] border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                                     <select className="block appearance-none w-full bg-white border border-gray-200 hover:border-gray-200 px-4 py-2 pr-8 shadow leading-tight focus:outline-none focus:shadow-outline rounded-none" onChange={e => setSort(e.target.value)}>
                                         <option value="nik_asc">NIK ASC</option>
@@ -82,7 +128,7 @@ export default function TableHistory({ attendances }) {
                                         <tr className="[&>*]:text-left">
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NO</th>
                                             <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NIK</th>
-                                            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NAME</th>
+                                            <th scope="col" className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">NAMA</th>
                                             <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Tanggal</th>
                                             <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Waktu</th>
                                             <th scope="col" className="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">Presensi</th>
