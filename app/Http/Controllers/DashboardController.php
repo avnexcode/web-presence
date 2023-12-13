@@ -25,7 +25,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard/Dashboard', [
             'title' => 'Dashboard',
             'users' => UserResource::collection($users),
-            'positions' => Position::all(), // Jika ingin mengirim semua posisi
+            'positions' => Position::all(),
         ]);
     }
 
@@ -42,7 +42,7 @@ class DashboardController extends Controller
         $attendances = Attendance::with('user')
             ->filter(request(['search']))
             ->selectRaw('*, DATE_FORMAT(date, "%d-%m-%Y") as formatted_date')
-            ->paginate(2232)
+            ->paginate(30)
             ->withQueryString();
 
         return Inertia::render('Dashboard/History', [

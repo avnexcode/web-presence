@@ -24,7 +24,7 @@ export default function Dashboard({ auth, title, users}) {
             header={
                 <>
                     <div className='flex justify-between'>
-                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
+                        <h2 className="font-semibold text-xl text-gray-800 leading-tight">Data Karyawan</h2>
                         <PrimaryButton>
                             <Link href='/dashboard/create'>Tambah Data Staff</Link>
                         </PrimaryButton>

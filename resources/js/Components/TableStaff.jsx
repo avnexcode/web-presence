@@ -39,6 +39,16 @@ export default function TablePresence({ users }) {
         }
     }, [sort]);
 
+    const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const searchValue = searchParams.get('search');
+        if (searchValue) {
+            setSearchTerm(searchValue);
+        }
+    }, []);
+
 
     return (
         <>
@@ -54,7 +64,7 @@ export default function TablePresence({ users }) {
                                 </Link>
                                 <form action="/dashboard" className="relative w-full" method="get">
                                     <label className="sr-only">Search</label>
-                                    <input type="text" name="search" id="search" className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Pencarian" />
+                                    <input type="text" name="search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} id="search" className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Pencarian" />
                                     <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                                         <svg className="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
                                     </div>
@@ -79,19 +89,28 @@ export default function TablePresence({ users }) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200">
-                                        {staff.map((user, index) => (
-                                            <tr key={index} className="[&>*]:text-left">
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{index + 1}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{user.nik}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{user.name.toUpperCase()}</td>
-                                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                                    <Link href={`dashboard/detail/${user.nik}`} type="button" className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Detail</Link>
+                                        {staff.length > 0 ? (
+                                            staff.map((user, index) => (
+                                                <tr key={index} className="[&>*]:text-left">
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{index + 1}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">{user.nik}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{user.name.toUpperCase()}</td>
+                                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                                        <Link href={`dashboard/detail/${user.nik}`} type="button" className="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none">Detail</Link>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan={4} className="px-6 py-4 whitespace-nowrap text-md font-onest font-semibold text-red-500 text-center">
+                                                    Data tidak ditemukan.
                                                 </td>
                                             </tr>
-                                        ))}
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
+
                             <div className="py-4 px-4 flex justify-center">
                                 <Paginator users={users} />
                             </div>

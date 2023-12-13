@@ -6,35 +6,46 @@ import Paginator from './Paginator'
 export default function TableHistory({ attendances }) {
     const [presences, setPresences] = useState(attendances.data);
     const [sort, setSort] = useState('');
-  
+
+
     useEffect(() => {
-      if (sort === 'nik_asc') {
-        setPresences(prev => 
-          [...prev].sort((a, b) => a.user_nik.nik - b.user_nik.nik)  
-        );
-      } else if (sort === 'nik_desc') {
-        setPresences(prev =>
-          [...prev].sort((a, b) => b.user_nik.nik - a.user_nik.nik)
-        );
-      } else if (sort === 'name_asc') {
-        setPresences(prev =>
-          [...prev].sort((a, b) => {
-            if(a.user_nik.name < b.user_nik.name) return -1; 
-            if(a.user_nik.name > b.user_nik.name) return 1;
-            return 0;
-          })
-        );
-      } else if (sort === 'name_desc') {
-        setPresences(prev =>
-          [...prev].sort((a, b) => {
-            if(a.user_nik.name > b.user_nik.name) return -1;
-            if(a.user_nik.name < b.user_nik.name) return 1;  
-            return 0;
-          })
-       );
-      }
+        if (sort === 'nik_asc') {
+            setPresences(prev =>
+                [...prev].sort((a, b) => a.user_nik.nik - b.user_nik.nik)
+            );
+        } else if (sort === 'nik_desc') {
+            setPresences(prev =>
+                [...prev].sort((a, b) => b.user_nik.nik - a.user_nik.nik)
+            );
+        } else if (sort === 'name_asc') {
+            setPresences(prev =>
+                [...prev].sort((a, b) => {
+                    if (a.user_nik.name < b.user_nik.name) return -1;
+                    if (a.user_nik.name > b.user_nik.name) return 1;
+                    return 0;
+                })
+            );
+        } else if (sort === 'name_desc') {
+            setPresences(prev =>
+                [...prev].sort((a, b) => {
+                    if (a.user_nik.name > b.user_nik.name) return -1;
+                    if (a.user_nik.name < b.user_nik.name) return 1;
+                    return 0;
+                })
+            );
+        }
     }, [sort]);
-  
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    useEffect(() => {
+        const searchParams = new URLSearchParams(window.location.search);
+        const searchValue = searchParams.get('search');
+        if (searchValue) {
+            setSearchTerm(searchValue);
+        }
+    }, []);
+
 
 
     return (
@@ -51,7 +62,7 @@ export default function TableHistory({ attendances }) {
                                 </Link>
                                 <form action="/dashboard/riwayat" className="relative w-full" method="get">
                                     <label className="sr-only">Search</label>
-                                    <input type="text" name="search" id="search" className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Pencarian" />
+                                    <input type="text" name="search" id="search" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Pencarian" />
                                     <div className="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3">
                                         <svg className="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
                                     </div>
@@ -78,7 +89,7 @@ export default function TableHistory({ attendances }) {
                                         </tr>
                                     </thead>
                                     <tbody className="divide-y divide-gray-200 ">
-                                        {presences.map((presence, index) => {
+                                        {presences.length > 0 ? presences.map((presence, index) => {
                                             const formattedDate = new Date(presence.date).toLocaleDateString('en-GB');
                                             return (
                                                 <tr key={index} className="[&>*]:text-left">
@@ -94,7 +105,13 @@ export default function TableHistory({ attendances }) {
                                                     }
                                                 </tr>
                                             );
-                                        })}
+                                        }) :
+                                            <tr>
+                                                <td colSpan={6} className="px-6 py-4 whitespace-nowrap text-md font-onest font-semibold text-red-500 text-center">
+                                                    Data tidak ditemukan.
+                                                </td>
+                                            </tr>
+                                        }
                                     </tbody>
                                 </table>
                             </div>
